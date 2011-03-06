@@ -16,13 +16,23 @@ module FuckYeahNouns
 
     get '/:noun' do
       idx = params[:idx] || 0
-      img = FuckYeahNouns.fetch_image(params[:noun], idx)
-      path = FuckYeahNouns.annotate(img, params[:noun])
+      path = FuckYeahNouns.fuck_noun(params[:noun])
       "<html><body><img src='#{path}'/></body></html>"
     end 
     
   end 
 
+  def self.fuck_noun(noun)
+    try_path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-]/,'')}.jpg"
+    if File.exist?("public#{try_path}")
+      return try_path
+    end 
+
+    img = FuckYeahNouns.fetch_image(noun)
+    path = FuckYeahNouns.annotate(img, noun)
+    return path
+  end 
+  
   def self.fetch_image(noun, idx=0)
     url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=#{CGI.escape noun}"
     res = JSON.parse(open(url).read)
