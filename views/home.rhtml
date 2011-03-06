@@ -1,0 +1,42 @@
+<html>
+<head>
+ <title>FUCK YEAH NOUNS</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+  <script>
+    $(function() {
+      $("form").submit(function() {
+        window.location = $("#search").val();
+        return false;
+      });
+    });
+  </script>
+  <style>
+    body {
+      margin: 0 auto;
+      text-align: center;
+      font-size: 60px;
+      font-family: helvetica;
+      font-weight: bold;
+      letter-spacing: -5px;
+      color: #333;
+    }
+   input {
+     margin: 0 auto;
+     height: 72px;
+      font-size: 60px;
+      line-height: 72px;
+      color: #333;
+      font-weight: bold;
+      letter-spacing: -5px;
+    }
+    form {
+      margin: 150px auto;
+    }
+  </style>
+</head>
+<body>
+<form>
+  <label for="search">FUCK YEAH</label> <input id="search" />
+</form>
+</body>
+</html>

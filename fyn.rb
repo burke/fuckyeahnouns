@@ -11,7 +11,7 @@ module FuckYeahNouns
     set :public, File.dirname(__FILE__) + '/public'
 
     get '/' do
-      # todo
+      erb :home
     end 
 
     get '/:noun' do
