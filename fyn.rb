@@ -51,8 +51,7 @@ module FuckYeahNouns
     caption.draw(picture)
 
     path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-]/,'')}.jpg"
-    out = "public#{path}"
-    picture.write(out)
+    picture.write("public#{path}")
     return path
   end 
   
