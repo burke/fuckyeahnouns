@@ -23,7 +23,7 @@ module FuckYeahNouns
   end 
 
   def self.fuck_noun(noun)
-    try_path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-]/,'')}.jpg"
+    try_path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-\ ]/,'')}.jpg"
     if File.exist?("public#{try_path}")
       return try_path
     end 
@@ -52,15 +52,17 @@ module FuckYeahNouns
     caption = Magick::Draw.new
     caption.fill('white')
     caption.stroke('black')
+    caption.font_stretch = Magick::ExtraCondensedStretch
+    caption.font('Helvetica-Bold')
     caption.stroke_width(2)
     caption.pointsize(48)
-    caption.font_weight(900)
+    caption.font_weight(800)
     caption.text_align(Magick::CenterAlign)
 
     caption.text(width/2.0, height-50, "FUCK YEAH\n#{noun.upcase}")
     caption.draw(picture)
 
-    path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-]/,'')}.jpg"
+    path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-\ ]/,'')}.jpg"
     picture.write("public#{path}")
     return path
   end 
