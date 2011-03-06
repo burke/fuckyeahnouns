@@ -41,11 +41,9 @@ module FuckYeahNouns
 
     caption = Magick::Draw.new
     caption.fill('white')
-    caption.fill_opacity(1.0)
     caption.stroke('black')
     caption.stroke_width(2)
     caption.pointsize(48)
-    caption.font_family('impact')
     caption.font_weight(900)
     caption.text_align(Magick::CenterAlign)
 
