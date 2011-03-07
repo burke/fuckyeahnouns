@@ -2,18 +2,12 @@ require 'open-uri'
 require 'json'
 require 'cgi'
 require 'RMagick'
-require 'aws/s3'
 require 'sinatra/base'
-
-AWS::S3::Base.establish_connection!(
-  :access_key_id     => ENV['S3_KEY'],
-  :secret_access_key => ENV['S3_SECRET']
-)
 
 module FuckYeahNouns
 
   class Application < Sinatra::Base
-
+    
     set :public, File.dirname(__FILE__) + '/public'
 
     get '/' do
@@ -22,11 +16,11 @@ module FuckYeahNouns
 
     get '/:noun' do
       idx = params[:idx] || 0
-      path = FuckYeahNouns.fuck_noun(params[:noun])
-      "<html><body><img src='#{path}'/></body></html>"
-    end 
-    
-  end 
+      data = FuckYeahNouns.fuck_noun(params[:noun])
+      headers 'Cache-Control' => 'public; max-age=1800', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
+      data
+    end
+  end
 
   def self.fuck_noun(noun)
     # try_path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-\ ]/,'')}.jpg"
@@ -68,10 +62,7 @@ module FuckYeahNouns
     caption.text(width/2.0, height-50, "FUCK YEAH\n#{noun.upcase}")
     caption.draw(picture)
 
-    path = "#{noun.gsub(/[^A-Za-z0-9_\-\ ]/,'')}.jpg"
-    
-    AWS::S3::S3Object.store(path, picture.to_blob, 'nodetesting', :access => :public_read)
-    return "http://nodetesting.s3.amazonaws.com/#{path}"
+    return picture.to_blob
   end 
   
 end 
