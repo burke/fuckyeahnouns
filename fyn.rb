@@ -22,6 +22,7 @@ module FuckYeahNouns
     end
 
     get '/:noun' do
+      headers 'Cache-Control' => 'public; max-age=18000'
       erb :noun
     end 
     
