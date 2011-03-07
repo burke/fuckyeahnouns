@@ -75,7 +75,7 @@
 <br/>
    <a href="http://twitter.com/share" class="twitter-share-button"
    data-count="vertical"
-   data-url="http://fuckyeahnouns.com/<%= params[:noun] %>" data-text="FUCK YEAH <%=params[:noun].upcase%> #Fuckyeahnouns" data-via="fuckyeahnouns">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+   data-url="http://fuckyeahnouns.com/<%= CGI.escape params[:noun] %>" data-text="FUCK YEAH <%=params[:noun].upcase%> #Fuckyeahnouns" data-via="fuckyeahnouns">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <p>
      &copy; 2011
      <a href="http://burkelibbey.org">Burke fucking Libbey</a> / <a href="http://innovatisinc.ca">Innovatis</a>
