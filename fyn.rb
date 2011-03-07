@@ -39,10 +39,12 @@ module FuckYeahNouns
   end 
   
   def self.fetch_image(noun, idx=0)
-    url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=#{CGI.escape noun}"
+    url = "http://boss.yahooapis.com/ysearch/images/v1/foo?appid=#{ENV['APP_ID']}"
+    # url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=#{CGI.escape noun}"
     res = JSON.parse(open(url).read)
-    imgdata = res['responseData']['results'][idx]
-    open(imgdata['unescapedUrl'])
+    open(res['ysearchresponse']['resultset_images'][0]['url'])
+    # imgdata = res['responseData']['results'][idx]
+    # open(imgdata['unescapedUrl'])
   end 
 
   def self.annotate(img, noun)
