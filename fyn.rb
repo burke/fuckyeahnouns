@@ -4,6 +4,9 @@ require 'cgi'
 require 'RMagick'
 require 'sinatra/base'
 require 'timeout'
+require 'newrelic_rpm'
+
+ENV['APP_ROOT'] ||= File.dirname(__FILE__)
 
 module FuckYeahNouns
 

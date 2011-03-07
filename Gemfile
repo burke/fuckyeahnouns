@@ -1,5 +1,6 @@
 source :gemcutter
 
+gem 'newrelic_rpm'
 gem 'aws-s3', :require => 'aws/s3'
 gem 'json'
 gem 'rmagick'
