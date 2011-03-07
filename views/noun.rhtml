@@ -2,62 +2,75 @@
   <head>
     <title>FUCK YEAH <%= params[:noun] %></title>
       <style>
-    body {
-      margin: 0 auto;
-      text-align: center;
-      font-size: 60px;
-      font-family: helvetica;
-    color: #333;
-    }
-  label {
-      letter-spacing: -5px;
-      font-weight: bold;
-}
-   input {
-     margin: 0 auto;
-     height: 72px;
-      font-size: 60px;
-      line-height: 72px;
-      color: #333;
-      font-weight: bold;
-      letter-spacing: -5px;
-      text-transform: uppercase;
-    }
-    form {
-      margin: 150px auto;
-    }
-   p {
-    margin-top: 0px;
-    font-size: 8px;
-    color: #999;
-   }  
-    a {
-    text-decoration: none;
-    color: #999;
-  }
+        body {
+          margin: 0 auto;
+          text-align: center;
+          font-size: 60px;
+          font-family: helvetica;
+          color: #333;
+        }
 
-  img{
-    padding-top: 1em;
-    padding-bottom: 10px;
-  }
+        label {
+          letter-spacing: -5px;
+          font-weight: bold;
+        }
+
+        input {
+          margin: 0 auto;
+          height: 72px;
+          font-size: 60px;
+          line-height: 72px;
+          color: #333;
+          font-weight: bold;
+          letter-spacing: -5px;
+          text-transform: uppercase;
+        }
+
+        form{
+          margin: 150px auto;
+        }
+
+        p{
+          margin-top: 10px;
+          font-size: 8px;
+          color: #999;
+        }
+
+        a{
+          text-decoration: none;
+          color: #999;
+        }
+
+        img{
+          padding-top: 1em;
+          padding-bottom: 10px;
+        }
   </style>
 
   </head>
   <body>
     <img src='/images/<%= CGI.escape params[:noun] %>' />
-    <p>&copy; 2011 <a href="http://burkelibbey.org">Burke fucking Libbey</a> / <a href="http://innovatisinc.ca">Innovatis</a><br/>Images provided by Yahoo!</p>
-    
-<script type="text/javascript">
+    <br/>
+    <a href="http://twitter.com/share" class="twitter-share-button" data-count="vertical" data-via="fuckyeahnouns">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <p>
+     &copy; 2011
+     <a href="http://burkelibbey.org">Burke fucking Libbey</a> / <a href="http://innovatisinc.ca">Innovatis</a>
+     <br/>
+     <a href="http://iamstef.net/">Stefan fucking Penner</a>,
+     <a href="http://eqdw.net/">Tim fucking Herd</a>
+     <br/>
+     Images provided by Yahoo!
+     </p>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-5149541-9']);
+      _gaq.push(['_trackPageview']);
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-5149541-9']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
   </body>
 </html>
