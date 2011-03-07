@@ -39,7 +39,7 @@ module FuckYeahNouns
   end 
   
   def self.fetch_image(noun, idx=0)
-    url = "http://boss.yahooapis.com/ysearch/images/v1/foo?appid=#{ENV['APP_ID']}"
+    url = "http://boss.yahooapis.com/ysearch/images/v1/#{CGI.escape noun}?appid=#{ENV['APP_ID']}"
     # url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=#{CGI.escape noun}"
     res = JSON.parse(open(url).read)
     open(res['ysearchresponse']['resultset_images'][0]['url'])
