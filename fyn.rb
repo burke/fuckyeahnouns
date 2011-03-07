@@ -49,6 +49,9 @@ module FuckYeahNouns
     url = "http://boss.yahooapis.com/ysearch/images/v1/#{CGI.escape noun}?appid=#{ENV['APP_ID']}"
     # url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=#{CGI.escape noun}"
 
+    
+    # seriously, seriously need to rewrite this clusterfuck. What am I thinking? 
+    # It's 2:30am. That's my excuse.
     retries = 1
     begin
       res = nil
@@ -67,13 +70,22 @@ module FuckYeahNouns
     set = res['ysearchresponse']['resultset_images']
     raise if set.size.zero?
     begin
-      open(set[0]['url'])
-    rescue 
-      open(set[1]['url'])
+      r = nil
+      Timeout::timeout(4) do
+        r=open(set[0]['url'])
+      end 
+      r
+    rescue StandardError, Timeout::Error
+      begin
+        r = nil
+        Timeout::timeout(4) do
+          r=open(set[1]['url'])
+        end 
+        r
+      rescue Timeout::Error
+        raise "omg"
+      end 
     end 
-    
-    # imgdata = res['responseData']['results'][idx]
-    # open(imgdata['unescapedUrl'])
   end 
 
   def self.annotate(img, noun)
