@@ -2,41 +2,46 @@
   <head>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
  <script>
-    $(function() {
-      $("button").click(function() {
+   $(function() {
+      $("form").submit(function() {
+        window.location = '/' + $("#search").val();
+        return false;
+      });
+     $("button").click(function() {
       window.location = $(this).attr('data-href');
       $(this).attr('disabled', true);
      });
     });
   </script>
-    <title>FUCK YEAH <%= params[:noun].upcase %></title>
+    <title>FUCK YEAH <%= params[:noun].upcase.gsub(/[^\w\d\!\@\#\$\%\^\&\*\_\-\ ]/,'') %></title>
       <style>
         body {
           margin: 0 auto;
           text-align: center;
-          font-size: 60px;
+          font-size: 36px;
           font-family: helvetica;
           color: #333;
         }
 
         label {
-          letter-spacing: -5px;
+          line-height: 44px;
+         letter-spacing: -3px;
           font-weight: bold;
         }
 
         input {
-          margin: 0 auto;
-          height: 72px;
-          font-size: 60px;
-          line-height: 72px;
+         margin: 0 auto;
+          height: 44px;
+          font-size: 36px;
+          line-height: 40px;
           color: #333;
           font-weight: bold;
-          letter-spacing: -5px;
+          letter-spacing: -3px;
           text-transform: uppercase;
         }
 
         form{
-          margin: 150px auto;
+          margin: 0 auto;
         }
 
         p{
@@ -44,6 +49,10 @@
           font-size: 8px;
           color: #999;
         }
+
+        label a {
+          color: #333;
+       }
 
         a{
           text-decoration: none;
@@ -58,10 +67,16 @@
   </head>
   <body>
     <img src='/images/<%= CGI.escape params[:noun] %>' />
-    <p><button class="offensive" data-href="/shirt/<%=CGI.escape params[:noun] %>">GET THIS ON A FUCKING SHIRT!</button></p>
-    <a href="http://twitter.com/share" class="twitter-share-button" data-count="vertical" data-text="FUCK YEAH <%=CGI.escape params[:noun].upcase%> #Fuckyeahnouns" data-via="fuckyeahnouns">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <br/>
-    <iframe src="http://www.facebook.com/plugins/like.php?href=fuckYEAHnouns&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; margin: 0 auto;height:30px;" allowTransparency="true"></iframe>
+    <form>
+      <label><a href="http://fuckyeahnouns.com">FUCK YEAH</a></label> <input id="search" />
+    </form>
+    <br/>
+    <a href="http://twitter.com/share" class="twitter-share-button"
+       data-count="vertical"
+       data-url="http://fuckyeahnouns.com/<%= CGI.escape params[:noun] %>" data-text="FUCK YEAH <%=params[:noun].upcase.gsub(/[^\w\d\!\@\#\$\%\^\&\*\_\-\ ]/,'')%> #Fuckyeahnouns" data-via="fuckyeahnouns">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <br/>
+    <iframe src="http://www.facebook.com/plugins/like.php?href=fuckYEAHnouns.com&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; margin: 0 auto;height:30px;" allowTransparency="true"></iframe>
     <p>
      &copy; 2011
      <a href="http://burkelibbey.org">Burke fucking Libbey</a> / <a href="http://innovatisinc.ca">Innovatis</a>
