@@ -3,6 +3,7 @@ require 'json'
 require 'cgi'
 require 'RMagick'
 require 'sinatra/base'
+require 'timeout'
 
 module FuckYeahNouns
 
@@ -47,7 +48,22 @@ module FuckYeahNouns
   def self.fetch_image(noun, idx=0)
     url = "http://boss.yahooapis.com/ysearch/images/v1/#{CGI.escape noun}?appid=#{ENV['APP_ID']}"
     # url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=#{CGI.escape noun}"
-    res = JSON.parse(open(url).read)
+
+    retries = 1
+    begin
+      res = nil
+      Timeout::timeout(4) do
+        res = JSON.parse(open(url).read)
+      end 
+    rescue Timeout::Error
+      retries -= 1
+      if retries >= 0
+        retry
+      else
+        raise "omg"
+      end
+    end 
+
     set = res['ysearchresponse']['resultset_images']
     raise if set.size.zero?
     begin
