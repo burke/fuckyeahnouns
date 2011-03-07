@@ -17,7 +17,7 @@ module FuckYeahNouns
     get '/images/:noun' do
       idx = params[:idx] || 0
       data = FuckYeahNouns.fuck_noun(params[:noun])
-      headers 'Cache-Control' => 'public; max-age=1800', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
+      headers 'Cache-Control' => 'public; max-age=18000', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
       data
     end
 
