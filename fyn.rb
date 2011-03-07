@@ -14,12 +14,17 @@ module FuckYeahNouns
       erb :home
     end 
 
-    get '/:noun' do
+    get '/images/:noun' do
       idx = params[:idx] || 0
       data = FuckYeahNouns.fuck_noun(params[:noun])
       headers 'Cache-Control' => 'public; max-age=1800', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
       data
     end
+
+    get '/:noun' do
+      "<html><body><img src='/images/#{CGI.escape params[:noun]}' /></body></html>"
+    end 
+    
   end
 
   def self.fuck_noun(noun)
