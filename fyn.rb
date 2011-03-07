@@ -11,44 +11,37 @@ module FuckYeahNouns
     set :public, File.dirname(__FILE__) + '/public'
 
     get '/' do
-      headers 'Cache-Control' => 'public; max-age=18000'
+      headers 'Cache-Control' => 'public; max-age=36000'
       erb :home
     end 
 
     get '/favicon.ico' do
-      headers 'Cache-Control' => 'public; max-age=18000'
+      headers 'Cache-Control' => 'public; max-age=36000'
       nil
     end       
-      
     
     get '/images/:noun' do
       idx = params[:idx] || 0
-      data = FuckYeahNouns.fuck_noun(params[:noun])
-      headers 'Cache-Control' => 'public; max-age=18000', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
+      begin
+        data = FuckYeahNouns.fuck_noun(params[:noun])
+        headers 'Cache-Control' => 'public; max-age=36000', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
+      rescue 
+        data = File.open('./didntfindshit.jpg')
+        headers 'Cache-Control' => 'public; max-age=30', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
+      end 
       data
     end
 
     get '/:noun' do
-      headers 'Cache-Control' => 'public; max-age=18000'
+      headers 'Cache-Control' => 'public; max-age=36000'
       erb :noun
     end 
     
   end
 
   def self.fuck_noun(noun)
-    # try_path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-\ ]/,'')}.jpg"
-    # if File.exist?("public#{try_path}")
-    #   return try_path
-    # end 
-
-    begin
-      img = FuckYeahNouns.fetch_image(noun)
-      path = FuckYeahNouns.annotate(img, noun)
-    rescue 
-      path = File.open('./didntfindshit.jpg')
-    end 
-      
-    return path
+    img = FuckYeahNouns.fetch_image(noun)
+    FuckYeahNouns.annotate(img, noun)
   end 
   
   def self.fetch_image(noun, idx=0)
