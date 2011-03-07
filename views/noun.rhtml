@@ -59,7 +59,7 @@
   <body>
     <img src='/images/<%= CGI.escape params[:noun] %>' />
     <p><button class="offensive" data-href="/shirt/<%=CGI.escape params[:noun] %>">GET THIS ON A FUCKING SHIRT!</button></p>
-    <a href="http://twitter.com/share" class="twitter-share-button" data-count="vertical" data-via="fuckyeahnouns">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <a href="http://twitter.com/share" class="twitter-share-button" data-count="vertical" data-text="FUCK YEAH <%=params[:noun].upcase%> #Fuckyeahnouns" data-via="fuckyeahnouns">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <p>
      &copy; 2011
      <a href="http://burkelibbey.org">Burke fucking Libbey</a> / <a href="http://innovatisinc.ca">Innovatis</a>
