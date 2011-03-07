@@ -1,5 +1,14 @@
 <html>
   <head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+ <script>
+    $(function() {
+      $("button").click(function() {
+      window.location = $(this).attr('data-href');
+      $(this).attr('disabled', true);
+     });
+    });
+  </script>
     <title>FUCK YEAH <%= params[:noun] %></title>
       <style>
     body {
@@ -40,11 +49,16 @@
     padding-top: 1em;
     padding-bottom: 10px;
   }
+
   </style>
 
   </head>
   <body>
     <img src='/images/<%= CGI.escape params[:noun] %>' />
+    
+<br/>
+    <p><button class="offensive" data-href="/shirt/<%=CGI.escape params[:noun] %>">GET THIS ON A FUCKING SHIRT!</button></p>
+
     <p>&copy; 2011 <a href="http://burkelibbey.org">Burke fucking Libbey</a> / <a href="http://innovatisinc.ca">Innovatis</a><br/>Images provided by Yahoo!</p>
     
 <script type="text/javascript">
