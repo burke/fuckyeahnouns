@@ -22,7 +22,7 @@ module FuckYeahNouns
     end
 
     get '/:noun' do
-      "<html><body><img src='/images/#{CGI.escape params[:noun]}' /></body></html>"
+      erb :noun
     end 
     
   end
