@@ -33,8 +33,13 @@ module FuckYeahNouns
     #   return try_path
     # end 
 
-    img = FuckYeahNouns.fetch_image(noun)
-    path = FuckYeahNouns.annotate(img, noun)
+    begin
+      img = FuckYeahNouns.fetch_image(noun)
+      path = FuckYeahNouns.annotate(img, noun)
+    rescue 
+      path = File.open('./didntfindshit.jpg')
+    end 
+      
     return path
   end 
   
@@ -42,7 +47,14 @@ module FuckYeahNouns
     url = "http://boss.yahooapis.com/ysearch/images/v1/#{CGI.escape noun}?appid=#{ENV['APP_ID']}"
     # url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=#{CGI.escape noun}"
     res = JSON.parse(open(url).read)
-    open(res['ysearchresponse']['resultset_images'][0]['url'])
+    set = res['ysearchresponse']['resultset_images']
+    raise if set.size.zero?
+    begin
+      open(set[0]['url'])
+    rescue 
+      open(set[1]['url'])
+    end 
+    
     # imgdata = res['responseData']['results'][idx]
     # open(imgdata['unescapedUrl'])
   end 
