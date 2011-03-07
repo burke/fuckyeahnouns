@@ -2,7 +2,13 @@ require 'open-uri'
 require 'json'
 require 'cgi'
 require 'RMagick'
+require 'aws/s3'
 require 'sinatra/base'
+
+AWS::S3::Base.establish_connection!(
+  :access_key_id     => ENV['S3_KEY'],
+  :secret_access_key => ENV['S3_SECRET']
+)
 
 module FuckYeahNouns
 
@@ -23,10 +29,10 @@ module FuckYeahNouns
   end 
 
   def self.fuck_noun(noun)
-    try_path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-\ ]/,'')}.jpg"
-    if File.exist?("public#{try_path}")
-      return try_path
-    end 
+    # try_path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-\ ]/,'')}.jpg"
+    # if File.exist?("public#{try_path}")
+    #   return try_path
+    # end 
 
     img = FuckYeahNouns.fetch_image(noun)
     path = FuckYeahNouns.annotate(img, noun)
@@ -62,9 +68,10 @@ module FuckYeahNouns
     caption.text(width/2.0, height-50, "FUCK YEAH\n#{noun.upcase}")
     caption.draw(picture)
 
-    path = "/images/#{noun.gsub(/[^A-Za-z0-9_\-\ ]/,'')}.jpg"
-    picture.write("public#{path}")
-    return path
+    path = "#{noun.gsub(/[^A-Za-z0-9_\-\ ]/,'')}.jpg"
+    
+    AWS::S3::S3Object.store(path, picture.to_blob, 'nodetesting', :access => :public_read)
+    return "http://nodetesting.s3.amazonaws.com/#{path}"
   end 
   
 end 
