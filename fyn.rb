@@ -11,9 +11,16 @@ module FuckYeahNouns
     set :public, File.dirname(__FILE__) + '/public'
 
     get '/' do
+      headers 'Cache-Control' => 'public; max-age=18000'
       erb :home
     end 
 
+    get '/favicon.ico' do
+      headers 'Cache-Control' => 'public; max-age=18000'
+      nil
+    end       
+      
+    
     get '/images/:noun' do
       idx = params[:idx] || 0
       data = FuckYeahNouns.fuck_noun(params[:noun])
