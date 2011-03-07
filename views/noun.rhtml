@@ -1,9 +1,47 @@
 <html>
   <head>
     <title>FUCK YEAH <%= params[:noun] %></title>
+      <style>
+    body {
+      margin: 0 auto;
+      text-align: center;
+      font-size: 60px;
+      font-family: helvetica;
+    color: #333;
+    }
+  label {
+      letter-spacing: -5px;
+      font-weight: bold;
+}
+   input {
+     margin: 0 auto;
+     height: 72px;
+      font-size: 60px;
+      line-height: 72px;
+      color: #333;
+      font-weight: bold;
+      letter-spacing: -5px;
+      text-transform: uppercase;
+    }
+    form {
+      margin: 150px auto;
+    }
+   p {
+    margin-top: 0px;
+    font-size: 8px;
+    color: #999;
+   }  
+    a {
+    text-decoration: none;
+    color: #999;
+}
+  </style>
+
   </head>
   <body>
     <img src='/images/<%= CGI.escape params[:noun] %>' />
+    <p>&copy; 2011 <a href="http://burkelibbey.org">Burke fucking Libbey</a> / <a href="http://innovatisinc.ca">Innovatis</a><br/>Images provided by Yahoo!</p>
+    
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
