@@ -24,7 +24,7 @@ module FuckYeahNouns
       headers 'Cache-Control' => 'public; max-age=36000'
       nil
     end       
-
+=begin
     get '/shirt/:noun' do
       url = "http://open-api.cafepress.com/authentication.getUserToken.cp?v=3&appKey=#{ENV['CAFEPRESS_KEY']}&email=#{ENV['CAFEPRESS_EMAIL']}&password=#{ENV['CAFEPRESS_PASSWORD']}"
       key = open(url).read.scan(/<value>(.*)<\/value>/).flatten.first
@@ -68,7 +68,7 @@ module FuckYeahNouns
       
       redirect "http://www.cafepress.com/fuckyeahnouns.#{pid}"
     end 
-    
+=end    
     get '/images/:noun' do
       idx = params[:idx] || 0
       begin
