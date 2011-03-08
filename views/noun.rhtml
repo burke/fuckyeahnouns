@@ -62,10 +62,19 @@
           padding-top: 1em;
           padding-bottom: 10px;
         }
+
+        #image-container{
+          width: 600px;
+          margin: 0 auto;
+          min-height: 400px;
+          background: url(images/ajax-loader.gif) center center no-repeat;
+        }
   </style>
   </head>
   <body>
-    <img src='/images/<%= CGI.escape params[:noun] %>' />
+    <div id="image-container">
+      <img src='/images/<%= CGI.escape params[:noun] %>' />
+    </div>
     <br/>
    <form>
       <label><a href="http://fuckyeahnouns.com">FUCK YEAH</a></label> <input id="search" />
