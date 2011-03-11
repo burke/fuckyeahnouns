@@ -69,7 +69,7 @@ module FuckYeahNouns
       redirect "http://www.cafepress.com/fuckyeahnouns.#{pid}"
     end 
 
-    BLACKLIST = ["selinaferguson", "pwaring",'eddsowden','shakarshy']
+    BLACKLIST = ["selinaferguson", "pwaring",'eddsowden','shakarshy','nickbrom']
     
     get '/images/:noun' do
       idx = params[:idx] || 0
