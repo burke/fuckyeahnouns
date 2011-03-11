@@ -6,8 +6,14 @@ require 'sinatra/base'
 require 'timeout'
 require 'newrelic_rpm'
 require 'rest_client'
+require 'sequel'
+require 'sqlite3'
+require 'postgres'
 
 ENV['APP_ROOT'] ||= File.dirname(__FILE__)
+
+DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://my.db')
+NOUNS = DB[:nouns]
 
 module FuckYeahNouns
 
@@ -91,7 +97,14 @@ module FuckYeahNouns
 
     get '/:noun' do
       headers 'Cache-Control' => 'public; max-age=36000'
+      NOUNS.insert(:noun => params[:noun]) rescue nil
       erb :noun
+    end 
+
+    get '/random' do
+      DB.fetch("SELECT * FROM nouns ORDER BY RANDOM() LIMIT 1") do |row|
+        redirect "/#{CGI.escape row[:noun]}"
+      end
     end 
     
   end
