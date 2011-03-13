@@ -80,11 +80,11 @@ module FuckYeahNouns
       redirect "http://www.cafepress.com/fuckyeahnouns.#{pid}"
     end 
 
-    BLACKLIST = ["selinaferguson", "pwaring",'eddsowden','shakarshy','nickbrom', 'julietuesley']
+    BLACKLIST = ["selinaferguson", "pwaring",'eddsowden','shakarshy','nickbrom', 'julietuesley','andrewbrin','dtox']
     
     get '/images/:noun' do
       idx = params[:idx] || 0
-      if BLACKLIST.include?(params[:noun].gsub(/[^\w]*/,''))
+      if BLACKLIST.include?(params[:noun].downcase.gsub(/[^\w]*/,''))
         data = File.open('./copyrightcomplaint.jpg')
         headers 'Cache-Control' => 'public; max-age=36000', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
         return data
