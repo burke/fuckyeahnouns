@@ -6,8 +6,13 @@ require 'sinatra/base'
 require 'timeout'
 require 'newrelic_rpm'
 require 'rest_client'
+require 'sequel'
+require 'sqlite3'
 
 ENV['APP_ROOT'] ||= File.dirname(__FILE__)
+
+DB = Sequel.connect(ENV['DATABASE_URL'] || 'mysql://root:@localhost/testtest')
+NOUNS = DB[:nouns]
 
 module FuckYeahNouns
 
@@ -24,6 +29,12 @@ module FuckYeahNouns
       headers 'Cache-Control' => 'public; max-age=36000'
       nil
     end       
+
+    get '/random' do
+      DB.fetch("SELECT * FROM nouns ORDER BY RANDOM() LIMIT 1") do |row|
+        redirect "/#{CGI.escape row[:noun]}"
+      end
+    end 
 
     get '/shirt/:noun' do
       url = "http://open-api.cafepress.com/authentication.getUserToken.cp?v=3&appKey=#{ENV['CAFEPRESS_KEY']}&email=#{ENV['CAFEPRESS_EMAIL']}&password=#{ENV['CAFEPRESS_PASSWORD']}"
@@ -91,9 +102,10 @@ module FuckYeahNouns
 
     get '/:noun' do
       headers 'Cache-Control' => 'public; max-age=36000'
+      NOUNS.insert(:noun => params[:noun]) rescue nil
       erb :noun
     end 
-    
+
   end
 
   def self.fuck_noun(noun, shirtastic=false)
