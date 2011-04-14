@@ -89,8 +89,13 @@ module FuckYeahNouns
       data
     end
 
+    def is_work_appropriate(noun)
+      !(/boob|tit|cock|penis|vagina|pussy|dick|ass|fuck|shit|piss|sex|gay|lesbian/ === noun)
+    end 
+    
     get '/:noun' do
       headers 'Cache-Control' => 'public; max-age=36000'
+      @display_ads = is_work_appropriate(params[:noun])
       erb :noun
     end 
 
