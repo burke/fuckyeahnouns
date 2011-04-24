@@ -90,7 +90,7 @@ module FuckYeahNouns
     end
 
     def is_work_appropriate(noun)
-      !(/boob|tit|cock|penis|vagina|pussy|dick|ass|fuck|shit|piss|sex|gay|lesbian/ === noun)
+      !(/boob|tit|cock|penis|vagina|pussy|dick|ass|fuck|shit|piss|sex|gay|lesbian|chick/ === noun)
     end 
     
     get '/:noun' do
