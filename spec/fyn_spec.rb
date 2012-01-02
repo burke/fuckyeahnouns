@@ -3,6 +3,10 @@ require 'rack/test'
 describe FuckYeahNouns::Application do
   include Rack::Test::Methods
 
+  def should_be_cached
+    last_response.headers['Cache-Control'].should =~ /public, must-revalidate, max-age=\d+/
+  end
+
   def app
     @app ||= subject
   end
@@ -25,8 +29,25 @@ describe FuckYeahNouns::Application do
     end
   end
 
-  describe 'get noun' do
+  describe 'get noun image' do
+    before(:each) do
+      get '/images/sleepy'
+    end
 
+    it 'loads' do
+      last_response.should be_ok
+    end
+
+    it 'is content-type of jpg' do
+      last_response.headers['content-type'].should == 'image/jpeg'
+    end
+
+    it 'is cached' do
+      should_be_cached
+    end
+  end
+
+  describe 'get noun' do
     before(:each) do
       get '/sleepy'
     end
@@ -48,7 +69,7 @@ describe FuckYeahNouns::Application do
     end
 
     it 'caches pages' do
-      last_response.headers['Cache-Control'].should =~ /public; max-age=\d+/
+      should_be_cached
     end
   end
 end

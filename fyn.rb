@@ -1,16 +1,17 @@
 require './boot'
 ENV['APP_ROOT'] ||= File.dirname(__FILE__)
 
-require 'actions/shirt'
+require './actions/shirt'
 
 module FuckYeahNouns
-
   class Application < Sinatra::Base
-
     set :public, File.dirname(__FILE__) + '/public'
 
+    before do
+      cache_control :public, :must_revalidate, max_age: 36000
+    end
+
     get '/' do
-      headers 'Cache-Control' => 'public; max-age=36000'
       erb :home
     end
 
@@ -28,18 +29,17 @@ module FuckYeahNouns
       idx = params[:idx] || 0
       if BLACKLIST.include?(params[:noun].downcase.gsub(/[^\w]*/,''))
         data = File.open('./copyrightcomplaint.jpg')
-        headers 'Cache-Control' => 'public; max-age=36000', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
         return data
       end
 
       begin
         data = FuckYeahNouns.fuck_noun(params[:noun])
-        headers 'Cache-Control' => 'public; max-age=36000', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
       rescue
+        cache_control :public, :must_revalidate, max_age: 30
         data = File.open('./didntfindshit.jpg')
-        headers 'Cache-Control' => 'public; max-age=30', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
       end
-      data
+
+      send_file data, type: :jpg, disposition: :inline
     end
 
     def is_work_appropriate(noun)
@@ -47,7 +47,6 @@ module FuckYeahNouns
     end
 
     get '/:noun' do
-      headers 'Cache-Control' => 'public; max-age=36000'
       @display_ads = is_work_appropriate(params[:noun])
       erb :noun
     end
