@@ -2,6 +2,8 @@ require './boot'
 ENV['APP_ROOT'] ||= File.dirname(__FILE__)
 
 require './actions/shirt'
+require './actions/image'
+require './actions/noun'
 
 module FuckYeahNouns
   class Application < Sinatra::Base
@@ -15,47 +17,22 @@ module FuckYeahNouns
       erb :home
     end
 
-    get '/shirt/:noun' do
-      if shirt = Actions::Shirt.create(params[:noun])
-        redirect "http://www.cafepress.com/fuckyeahnouns.#{shirt.pid}"
-      else
-        raise 'something went wrong with the shirt'
-      end
+    def noun
+      @noun ||= Actions::Noun.create(params[:noun])
     end
 
-    BLACKLIST = ["selinaferguson", "pwaring",'eddsowden','shakarshy','nickbrom', 'julietuesley','andrewbrin','dtox','abigailwessel', 'abby', 'angelaparriott', 'elizabethparriott']
+    get '/shirt/:noun' do
+      redirect noun.shirt.url
+    end
 
     get '/images/:noun' do
-      idx = params[:idx] || 0
-      if BLACKLIST.include?(params[:noun].downcase.gsub(/[^\w]*/,''))
-        data = File.open('./copyrightcomplaint.jpg')
-        return data
-      end
-
-      begin
-        data = FuckYeahNouns.fuck_noun(params[:noun])
-      rescue
-        cache_control :public, :must_revalidate, max_age: 30
-        data = File.open('./didntfindshit.jpg')
-      end
-
-      send_file data, type: :jpg, disposition: :inline
-    end
-
-    def is_work_appropriate(noun)
-      !(/boob|tit|cock|penis|vagina|pussy|dick|ass|fuck|shit|piss|sex|gay|lesbian|chick/ === noun)
+      send_file noun.image.file, type: :jpg, disposition: :inline
     end
 
     get '/:noun' do
-      @display_ads = is_work_appropriate(params[:noun])
+      noun
       erb :noun
     end
-
-  end
-
-  def self.fuck_noun(noun, shirtastic=false)
-    img = FuckYeahNouns.fetch_image(noun)
-    FuckYeahNouns.annotate(img, noun, shirtastic)
   end
 
   def self.fetch_image(noun, idx=0)

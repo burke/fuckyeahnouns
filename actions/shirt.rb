@@ -1,6 +1,6 @@
 module Actions
   class Shirt
-    def create(noun)
+    def self.create(noun)
       url = "http://open-api.cafepress.com/authentication.getUserToken.cp?v=3&appKey=#{ENV['CAFEPRESS_KEY']}&email=#{ENV['CAFEPRESS_EMAIL']}&password=#{ENV['CAFEPRESS_PASSWORD']}"
       key = open(url).read.scan(/<value>(.*)<\/value>/).flatten.first
 
