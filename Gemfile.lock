@@ -28,6 +28,8 @@ GEM
     sinatra (1.2.0)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
+    sinatra-cache-assets (0.0.3)
+      sinatra (>= 1.0)
     tilt (1.2.2)
     xml-simple (1.0.14)
 
@@ -44,3 +46,4 @@ DEPENDENCIES
   rspec
   sequel
   sinatra
+  sinatra-cache-assets

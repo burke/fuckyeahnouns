@@ -7,6 +7,7 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'json'
 gem 'rmagick'
 gem 'sinatra'
+gem 'sinatra-cache-assets'
 
 group :development,:test do
   gem 'rspec'
