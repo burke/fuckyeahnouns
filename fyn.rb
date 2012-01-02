@@ -13,11 +13,6 @@ module FuckYeahNouns
       erb :home
     end
 
-    get '/favicon.ico' do
-      headers 'Cache-Control' => 'public; max-age=36000'
-      nil
-    end
-
     get '/shirt/:noun' do
       url = "http://open-api.cafepress.com/authentication.getUserToken.cp?v=3&appKey=#{ENV['CAFEPRESS_KEY']}&email=#{ENV['CAFEPRESS_EMAIL']}&password=#{ENV['CAFEPRESS_PASSWORD']}"
       key = open(url).read.scan(/<value>(.*)<\/value>/).flatten.first
