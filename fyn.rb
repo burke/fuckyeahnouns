@@ -1,29 +1,22 @@
-require 'open-uri'
-require 'json'
-require 'cgi'
-require 'RMagick'
-require 'sinatra/base'
-require 'timeout'
-require 'newrelic_rpm'
-require 'rest_client'
+require './boot'
 
 ENV['APP_ROOT'] ||= File.dirname(__FILE__)
 
 module FuckYeahNouns
 
   class Application < Sinatra::Base
-    
+
     set :public, File.dirname(__FILE__) + '/public'
 
     get '/' do
       headers 'Cache-Control' => 'public; max-age=36000'
       erb :home
-    end 
+    end
 
     get '/favicon.ico' do
       headers 'Cache-Control' => 'public; max-age=36000'
       nil
-    end       
+    end
 
     get '/shirt/:noun' do
       url = "http://open-api.cafepress.com/authentication.getUserToken.cp?v=3&appKey=#{ENV['CAFEPRESS_KEY']}&email=#{ENV['CAFEPRESS_EMAIL']}&password=#{ENV['CAFEPRESS_PASSWORD']}"
@@ -33,9 +26,9 @@ module FuckYeahNouns
 
       tmppath="tmp/#{rand 10000000}"
       File.open(tmppath, 'wb') { |f| f.write data }
-      
+
       puts key
-      hash = { 
+      hash = {
         :cpFile1 => File.new(tmppath),
         # :cpFile2 => nil,
         :appKey => ENV['CAFEPRESS_KEY'],
@@ -56,69 +49,69 @@ module FuckYeahNouns
       <?xml version="1.0"?>
       <product id="0" storeId="fuckyeahnouns" name="FUCK YEAH #{params[:noun]}" merchandiseId="2" sellPrice="19.99" description="FUCK YEAH #{params[:noun]}!" sectionId="7732546">
         <mediaConfiguration height="10" name="FrontCenter" designId="#{imgref}" />
-      </product>      
+      </product>
       XML
       xml.sub!(/^\s*/,'')
 
       url = "http://open-api.cafepress.com/product.save.cp?v=3&appKey=#{ENV['CAFEPRESS_KEY']}&userToken=#{key}&value=#{CGI.escape xml}"
 
       z = RestClient.get(url)
-      
+
       pid = z.scan(/<product id=\"(\d+)\"/).flatten.first
-      
+
       redirect "http://www.cafepress.com/fuckyeahnouns.#{pid}"
-    end 
+    end
 
     BLACKLIST = ["selinaferguson", "pwaring",'eddsowden','shakarshy','nickbrom', 'julietuesley','andrewbrin','dtox','abigailwessel', 'abby', 'angelaparriott', 'elizabethparriott']
-    
+
     get '/images/:noun' do
       idx = params[:idx] || 0
       if BLACKLIST.include?(params[:noun].downcase.gsub(/[^\w]*/,''))
         data = File.open('./copyrightcomplaint.jpg')
         headers 'Cache-Control' => 'public; max-age=36000', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
         return data
-      end 
+      end
 
       begin
         data = FuckYeahNouns.fuck_noun(params[:noun])
         headers 'Cache-Control' => 'public; max-age=36000', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
-      rescue 
+      rescue
         data = File.open('./didntfindshit.jpg')
         headers 'Cache-Control' => 'public; max-age=30', 'Content-Type' => 'image/jpg', 'Content-Disposition' => 'inline'
-      end 
+      end
       data
     end
 
     def is_work_appropriate(noun)
       !(/boob|tit|cock|penis|vagina|pussy|dick|ass|fuck|shit|piss|sex|gay|lesbian|chick/ === noun)
-    end 
-    
+    end
+
     get '/:noun' do
       headers 'Cache-Control' => 'public; max-age=36000'
       @display_ads = is_work_appropriate(params[:noun])
       erb :noun
-    end 
+    end
 
   end
 
   def self.fuck_noun(noun, shirtastic=false)
     img = FuckYeahNouns.fetch_image(noun)
     FuckYeahNouns.annotate(img, noun, shirtastic)
-  end 
-  
+  end
+
   def self.fetch_image(noun, idx=0)
     url = "http://boss.yahooapis.com/ysearch/images/v1/#{CGI.escape noun}?appid=#{ENV['APP_ID']}"
     # url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=#{CGI.escape noun}"
 
-    
-    # seriously, seriously need to rewrite this clusterfuck. What am I thinking? 
+
+    # seriously, seriously need to rewrite this clusterfuck. What am I thinking?
     # It's 2:30am. That's my excuse.
     retries = 1
     begin
       res = nil
       Timeout::timeout(4) do
         res = JSON.parse(open(url).read)
-      end 
+      end
     rescue Timeout::Error
       retries -= 1
       if retries >= 0
@@ -126,7 +119,7 @@ module FuckYeahNouns
       else
         raise "omg"
       end
-    end 
+    end
 
     set = res['ysearchresponse']['resultset_images']
     raise if set.size.zero?
@@ -134,20 +127,20 @@ module FuckYeahNouns
       r = nil
       Timeout::timeout(4) do
         r=open(set[0]['url'])
-      end 
+      end
       r
     rescue StandardError, Timeout::Error
       begin
         r = nil
         Timeout::timeout(4) do
           r=open(set[1]['url'])
-        end 
+        end
         r
       rescue Timeout::Error
         raise "omg"
-      end 
-    end 
-  end 
+      end
+    end
+  end
 
   def self.annotate(img, noun, shirtastic=false)
     picture = Magick::Image.from_blob(img.read).first
@@ -157,15 +150,15 @@ module FuckYeahNouns
       factor = 2000/600.0
       if width > height
         picture.resize!(2000,2000*(height/width.to_f))
-      else 
+      else
         picture.resize!(2000*(width/height.to_f), 2000)
-      end 
-    else 
+      end
+    else
       factor = 1
       picture.resize!(600,600*(height/width.to_f))
-    end 
+    end
     width,height = picture.columns, picture.rows
-    
+
     overlay = Magick::Image.new(width, 100 * factor)
     picture.composite!(overlay, Magick::SouthGravity, Magick::MultiplyCompositeOp)
 
@@ -183,7 +176,7 @@ module FuckYeahNouns
     caption.draw(picture)
 
     return picture.to_blob
-  end 
-  
-end 
+  end
+
+end
 

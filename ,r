@@ -1,0 +1,14 @@
+require './fyn'
+require 'rack/test'
+describe FuckYeahNouns::Application do
+  include Rack::Test::Methods
+
+  def app
+    @app ||= FuckYeahNouns::Application
+  end
+
+  it 'loads' do
+    get '/'
+    last_response.should be_ok
+  end
+end
