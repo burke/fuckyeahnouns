@@ -11,6 +11,14 @@ describe Actions::Noun do
     it "runs" do
       subject.should_not be_nil
     end
+
+    it "returns valid shirt" do
+      subject.shirt
+    end
+
+    it "returns valid image" do
+      subject.image
+    end
   end
 end
 
@@ -47,3 +55,4 @@ describe Actions::Noun::NSFW do
     end
   end
 end
+
