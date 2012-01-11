@@ -11,5 +11,6 @@ gem 'sinatra-cache-assets'
 
 group :development,:test do
   gem 'rspec'
+  gem 'pry'
   gem 'rack-test', require: 'rack/test'
 end

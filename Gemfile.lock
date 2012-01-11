@@ -6,10 +6,18 @@ GEM
       mime-types
       xml-simple
     builder (3.0.0)
+    coderay (0.9.8)
     diff-lcs (1.1.3)
     json (1.5.1)
+    method_source (0.6.7)
+      ruby_parser (>= 2.3.1)
     mime-types (1.16)
     newrelic_rpm (2.13.4)
+    pry (0.9.7.4)
+      coderay (~> 0.9.8)
+      method_source (~> 0.6.7)
+      ruby_parser (>= 2.3.1)
+      slop (~> 2.1.0)
     rack (1.2.1)
     rack-test (0.6.1)
       rack (>= 1.0)
@@ -24,12 +32,16 @@ GEM
     rspec-expectations (2.7.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.7.0)
+    ruby_parser (2.3.1)
+      sexp_processor (~> 3.0)
     sequel (3.21.0)
+    sexp_processor (3.0.9)
     sinatra (1.2.0)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
     sinatra-cache-assets (0.0.3)
       sinatra (>= 1.0)
+    slop (2.1.0)
     tilt (1.2.2)
     xml-simple (1.0.14)
 
@@ -40,6 +52,7 @@ DEPENDENCIES
   aws-s3
   json
   newrelic_rpm
+  pry
   rack-test
   rest-client
   rmagick
