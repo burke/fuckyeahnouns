@@ -2,5 +2,4 @@ public/images/*
 log/*
 *.sqlite3
 *.db
-config/*
 *.swp
