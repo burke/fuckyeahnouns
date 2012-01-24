@@ -50,7 +50,7 @@ module Actions
     end
 
     def self.annotate(img, noun, shirtastic=false)
-      picture = Magick::Image.from_blob(open('copyrightcomplaint.jpg').read).first
+      picture = Magick::Image.from_blob(img.read).first
       width,height = picture.columns, picture.rows
 
       if shirtastic
@@ -82,7 +82,9 @@ module Actions
       caption.text(width/2.0, height-(50*factor), "FUCK YEAH\n#{noun.upcase}")
       caption.draw(picture)
 
-      return picture.to_blob
+      tmp = Tempfile.new('asdf')
+      tmp.write(picture.to_blob)
+      tmp
     end
   end
 

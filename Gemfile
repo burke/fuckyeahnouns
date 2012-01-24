@@ -10,7 +10,8 @@ gem 'sinatra'
 gem 'sinatra-cache-assets'
 gem 'rake'
 gem 'racksh'
-
+gem 'rack-cache', require: false
+gem 'dalli'
 group :development,:test do
   gem 'rspec'
   gem 'pry'

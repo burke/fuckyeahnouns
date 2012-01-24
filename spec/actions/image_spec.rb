@@ -43,5 +43,21 @@ describe Actions::Image do
         }.to raise_error Actions::Image::AnnotationException
       end
     end
+
+    context 'annotation success' do
+      before(:each) do
+        Actions::Image.stub(:fetch)    { test_image }
+      end
+
+      it 'succeeds ' do
+        expect {
+          image('sleepy')
+        }.to_not raise_error
+      end
+
+      it 'has a file' do
+        image('sleepy').file.path.should_not be_empty
+      end
+    end
   end
 end
