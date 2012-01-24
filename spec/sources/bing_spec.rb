@@ -3,7 +3,7 @@ require './sources/bing.rb'
 describe 'Bing' do
 
   describe '.process' do
-    subject { Bing.process(Bing.open_json('./bing.json')) }
+    subject { Bing.process(Bing.open_json('./spec/support/bing.json')) }
     its([:total])  { should equal 5660 }
     its([:images]) { should respond_to :each }
   end

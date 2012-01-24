@@ -8,7 +8,7 @@ module Actions
       end
 
       def image
-        Struct.new(:file, :max_age).new('./didntfindshit.jpg',36000)
+        Struct.new(:file, :max_age).new('./public/didntfindshit.jpg',300)
       end
 
       def self.nsfw?(noun)

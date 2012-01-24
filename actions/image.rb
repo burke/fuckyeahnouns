@@ -9,7 +9,7 @@ module Actions
     module Didntfindshit
 
       def file
-        File.new './didntfindshit.jpg'
+        File.new './public/didntfindshit.jpg'
       end
 
       def max_age
