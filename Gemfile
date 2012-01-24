@@ -12,6 +12,7 @@ gem 'rake'
 gem 'racksh'
 gem 'rack-cache', require: false
 gem 'dalli'
+gem 'unicorn'
 group :development,:test do
   gem 'rspec'
   gem 'pry'
