@@ -1,30 +1,9 @@
+require './actions/noun/nsfw'
+require './actions/noun/black_listed'
+
 module Actions
   class Noun
     attr_reader :noun, :nsfw
-
-    module NSFW
-      WORK_INAPPROPRIATE = /boob|tit|cock|penis|vagina|pussy|dick|ass|fuck|shit|piss|sex|gay|lesbian|chick/
-      def nsfw?
-        true
-      end
-
-      def self.nsfw?(noun)
-        noun =~ WORK_INAPPROPRIATE
-      end
-    end
-
-    module BlackListed
-      BLACKLIST = ["selinaferguson", "pwaring",'eddsowden','shakarshy','nickbrom', 'julietuesley','andrewbrin','dtox','abigailwessel', 'abby', 'angelaparriott', 'elizabethparriott']
-      def file
-        Struct.new(:file, :max_age).new('./copyrightcomplaint.jpg',36000)
-      end
-
-      def self.blacklisted?(noun)
-        noun.downcase!
-        noun.gsub!(/[^\w]*/,'')
-        BLACKLIST.include?(noun)
-      end
-    end
 
     def initialize(noun)
       @noun = noun
@@ -47,7 +26,5 @@ module Actions
 
       instance
     end
-
   end
-
 end

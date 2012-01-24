@@ -1,9 +1,15 @@
+require 'cgi'
+require 'timeout'
+require 'open-uri'
+
 module Actions
   class Image
+    AnnotationException = Class.new(Exception)
+
     module Didntfindshit
 
       def file
-        './didntfindshit.jpg'
+        File.new './didntfindshit.jpg'
       end
 
       def max_age
@@ -19,68 +25,32 @@ module Actions
       @file    = nil
     end
 
-    def fetch
-      @file = Image.fetch_image(noun)
-      Image.annotate(@file, noun, shirtastic)
+    def fetch!
+      @file = Image.fetch(@noun)
     end
 
-    def self.create(noun)
+    def annotate!
+      @file = Image.annotate(@file,@noun)
+    end
+
+    def self.create(noun=nil)
       instance = new(noun)
 
-      begin
-        instance.fetch
-      rescue
-        instance.extend(Didntfindshit)
-      end
+      noun or return instance.extend(Didntfindshit)
+
+      instance.fetch!    rescue instance.extend(Didntfindshit)
+      instance.annotate! rescue raise(AnnotationException)
 
       instance
     end
 
-    def self.fetch_image(noun, idx=0)
-      url = "http://boss.yahooapis.com/ysearch/images/v1/#{CGI.escape noun}?appid=#{ENV['APP_ID']}"
-      # url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=#{CGI.escape noun}"
-
-
-      # seriously, seriously need to rewrite this clusterfuck. What am I thinking?
-      # It's 2:30am. That's my excuse.
-      retries = 1
-      begin
-        res = nil
-        Timeout::timeout(4) do
-          res = JSON.parse(open(url).read)
-        end
-      rescue Timeout::Error
-        retries -= 1
-        if retries >= 0
-          retry
-        else
-          raise "omg"
-        end
-      end
-
-      set = res['ysearchresponse']['resultset_images']
-      raise if set.size.zero?
-      begin
-        r = nil
-        Timeout::timeout(4) do
-          r=open(set[0]['url'])
-        end
-        r
-      rescue StandardError, Timeout::Error
-        begin
-          r = nil
-          Timeout::timeout(4) do
-            r=open(set[1]['url'])
-          end
-          r
-        rescue Timeout::Error
-          raise "omg"
-        end
-      end
+    def self.fetch(noun,source=Bing)
+      # round-robin sources..
+      source.fetch(noun)
     end
 
     def self.annotate(img, noun, shirtastic=false)
-      picture = Magick::Image.from_blob(img.read).first
+      picture = Magick::Image.from_blob(open('copyrightcomplaint.jpg').read).first
       width,height = picture.columns, picture.rows
 
       if shirtastic

@@ -3,28 +3,35 @@ require './boot'
 require './actions/noun'
 
 describe Actions::Noun do
-  describe "valid noun" do
+  context"valid noun" do
     let(:subject) do
       Actions::Noun.create("sleepy")
     end
 
+    it('runs') { should_not be_nil }
+    xit(:shirt) { should be_valid }
+
+    xit('image.file') { should_not match(/didntfindshit/) }
+
+  end
+
+  context"nsfw noun" do
+    let(:subject) do
+      Actions::Noun.create("boob")
+    end
+
     it "runs" do
-      subject.should_not be_nil
+      should_not be_nil
     end
-
-    it "returns valid shirt" do
-      subject.shirt
-    end
-
-    it "returns valid image" do
-      subject.image
-    end
+    xit ('shirt.url') { should match('')}
+    xit ('image.file') { should match(/didntfindshit/) }
   end
 end
 
 describe Actions::Noun::BlackListed do
   describe '.blacklisted?' do
     let(:subject) { Actions::Noun::BlackListed }
+
     context 'blacklisted' do
       it 'is true' do
         subject.blacklisted?('selinaferguson').should be_true

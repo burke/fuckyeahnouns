@@ -4,10 +4,11 @@ ENV['APP_ROOT'] ||= File.dirname(__FILE__)
 require './actions/shirt'
 require './actions/image'
 require './actions/noun'
+require './sources/bing'
 
 module FuckYeahNouns
   class Application < Sinatra::Base
-    set :public, File.dirname(__FILE__) + '/public'
+    set :public_folder, File.dirname(__FILE__) + '/public'
 
     before do
       cache_control :public, :must_revalidate, max_age: 36000
@@ -34,6 +35,4 @@ module FuckYeahNouns
       erb :noun
     end
   end
-
 end
-

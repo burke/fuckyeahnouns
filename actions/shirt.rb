@@ -9,7 +9,6 @@ module Actions
       tmppath="tmp/#{rand 10000000}"
       File.open(tmppath, 'wb') { |f| f.write data }
 
-      puts key
       hash = {
         :cpFile1 => File.new(tmppath),
         # :cpFile2 => nil,
@@ -17,8 +16,10 @@ module Actions
         :userToken => key,
         :folder => "Images"
       }
+
       action = "http://upload.cafepress.com/image.upload.cp"
       x = RestClient.post action, hash.merge(:multipart => true)
+
       File.unlink(tmppath)
 
       imgref = x.scan(/<value>(.*)<\/value>/).flatten.first
