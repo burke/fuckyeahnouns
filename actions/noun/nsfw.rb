@@ -2,6 +2,7 @@ module Actions
   class Noun
     module NSFW
       WORK_INAPPROPRIATE = /boob|tit|cock|penis|vagina|pussy|dick|ass|fuck|shit|piss|sex|gay|lesbian|chick/
+
       def nsfw?
         true
       end
@@ -11,7 +12,8 @@ module Actions
       end
 
       def self.nsfw?(noun)
-        noun =~ WORK_INAPPROPRIATE
+        #noun =~ WORK_INAPPROPRIATE
+        false
       end
     end
   end
