@@ -48,6 +48,8 @@ end
 
 describe Actions::Noun::NSFW do
   describe '.nsfw?' do
+    before(:all) { Actions::Noun::NSFW.enable! }
+    after(:all) { Actions::Noun::NSFW.disable! }
     let(:subject) { Actions::Noun::NSFW }
     context 'is nsfw' do
       it 'is true' do
