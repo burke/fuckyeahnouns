@@ -1,6 +1,7 @@
 require 'cgi'
 require 'timeout'
 require 'open-uri'
+require './actions/image/didntfindshit'
 
 module Actions
   class Image
