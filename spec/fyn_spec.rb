@@ -1,5 +1,6 @@
 require './fyn'
 require 'rack/test'
+
 describe FuckYeahNouns::Application do
   include Rack::Test::Methods
 
