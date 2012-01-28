@@ -3,6 +3,18 @@ module Actions
     module NSFW
       WORK_INAPPROPRIATE = /boob|tit|cock|penis|vagina|pussy|dick|ass|fuck|shit|piss|sex|gay|lesbian|chick/
 
+      def self.enabled?
+        @enabled
+      end
+
+      def self.enable!
+        @enabled = true
+      end
+
+      def self.disable!
+        @enabled = false
+      end
+
       def nsfw?
         true
       end
@@ -12,8 +24,7 @@ module Actions
       end
 
       def self.nsfw?(noun)
-        #noun =~ WORK_INAPPROPRIATE
-        false
+        noun =~ WORK_INAPPROPRIATE if enabled?
       end
     end
   end
