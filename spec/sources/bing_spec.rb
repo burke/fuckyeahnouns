@@ -28,7 +28,7 @@ describe 'Bing' do
 
     let(:subject)     { Bing.fetch('xbox') }
     its(:images)      { should respond_to(:each) }
-    its(:images)      { should ==(['http://example.com/example.jpg'])}
+    its(:images)      { should == ['http://example.com/example.jpg'] }
 
     its('best_image.path')  { should == './spec/support/test_image.jpg' }
   end

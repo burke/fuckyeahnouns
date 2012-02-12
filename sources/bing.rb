@@ -4,6 +4,7 @@ require './sources/image_iterator'
 
 class Bing
   attr_reader :noun, :images, :result, :json
+  include ImageIterator
 
   def initialize(noun)
     @noun = noun

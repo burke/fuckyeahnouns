@@ -7,17 +7,6 @@ module Actions
   class Image
     AnnotationException = Class.new(Exception)
 
-    module Didntfindshit
-
-      def file
-        File.new './public/didntfindshit.jpg'
-      end
-
-      def max_age
-        30
-      end
-    end
-
     attr_accessor :file, :max_age
 
     def initialize(noun)
