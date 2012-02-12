@@ -1,28 +1,39 @@
 require 'json'
+require 'open-uri'
+require './sources/image_iterator'
+
 class Bing
+  attr_reader :noun, :images, :result, :json
 
   def initialize(noun)
     @noun = noun
-    @urls = []
+
+    @images = []
     @result = nil
     @json   = nil
   end
 
   def self.fetch(noun)
-    new(noun).best_image
+    instance = new(noun)
+    instance.search!
+    instance
+  end
+
+  def search!
+    @url    = Bing.search_url(@noun)
+    @result = Bing.open_json(@url)
+    @json   = Bing.process_json(@result)
+
+    @images = @json[:images]
+
+    nil
   end
 
   def best_image
-    search_url = Bing.search_url(@noun)
-    @result    = Bing.process(Bing.open_json(search_url))
-    @urls      = @result[:images]
-
-    # cycle till we find a working image
-    open(@urls.first)
+    Kernel.open(images.first)
   end
 
-
-  def self.process(json)
+  def self.process_json(json)
     result = json["SearchResponse"]
     images = result["Image"]
 
@@ -39,8 +50,9 @@ class Bing
   end
 
   def self.open_json(url)
-    open(url) do |fh|
+    Kernel.open(url) do |fh|
       return JSON.parse(fh.read)
     end
   end
+
 end

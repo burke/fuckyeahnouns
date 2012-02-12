@@ -2,14 +2,14 @@ require './sources/bing.rb'
 
 describe 'Bing' do
 
-  describe '.process' do
-    subject { Bing.process(Bing.open_json('./spec/support/bing.json')) }
+  describe '.process_json' do
+    subject { Bing.process_json(Bing.open_json('./spec/support/bing.json')) }
     its([:total])  { should equal 5660 }
     its([:images]) { should respond_to :each }
   end
 
   describe '.fetch' do
-    before(:all) do
+    before do
       Bing.stub(:open_json) do
         {
           "SearchResponse" => {
@@ -22,11 +22,15 @@ describe 'Bing' do
       end
 
       Kernel.stub(:open) do
-        File.new('./spec/support/test_image.jpg')
+        open('./spec/support/test_image.jpg')
       end
     end
-    let(:subject)  { Bing.fetch('xbox') }
-    it { should respond_to(:read) }
+
+    let(:subject)     { Bing.fetch('xbox') }
+    its(:images)      { should respond_to(:each) }
+    its(:images)      { should ==(['http://example.com/example.jpg'])}
+
+    its('best_image.path')  { should == './spec/support/test_image.jpg' }
   end
 
   describe 'search_url' do
