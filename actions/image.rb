@@ -46,8 +46,15 @@ module Actions
     end
 
     def self.fetch(noun,source=Bing)
-      # round-robin sources..
-      source.fetch(noun)
+      images = source.fetch(noun)
+      count  = 0
+
+      begin
+        return images.next
+      rescue Exception => e
+        count += 1
+        retry if count < 5
+      end
     end
 
     def self.annotate(img, noun, shirtastic=false)
