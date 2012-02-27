@@ -8,6 +8,10 @@ require './sources/bing'
 
 module FuckYeahNouns
   class Application < Sinatra::Base
+    configure :production do
+      require 'newrelic_rpm'
+    end
+
     set :public_folder, File.dirname(__FILE__) + '/public'
 
     before do
