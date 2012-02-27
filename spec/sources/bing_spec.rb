@@ -4,6 +4,7 @@ describe 'Bing' do
 
   describe '.process_json' do
     subject { Bing.process_json(Bing.open_json('./spec/support/bing.json')) }
+
     its([:total])  { should equal 5660 }
     its([:images]) { should respond_to :each }
   end

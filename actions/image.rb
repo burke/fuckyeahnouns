@@ -78,7 +78,9 @@ module Actions
 
       caption.text(width/2.0, height-(50*factor), "FUCK YEAH\n#{noun.upcase}")
       caption.draw(picture)
-      picture.compression = Magick::LosslessJPEGCompression
+
+      picture.to_blob { self.quality = 50 }
+
       tmp = Tempfile.new('asdf')
       tmp.write(picture.to_blob)
       tmp

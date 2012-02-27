@@ -3,8 +3,8 @@ require './boot'
 require './actions/noun'
 
 describe Actions::Noun do
-  context"valid noun" do
-    let(:subject) do
+  context "valid noun" do
+    subject do
       Actions::Noun.create("sleepy")
     end
 
@@ -15,7 +15,7 @@ describe Actions::Noun do
 
   end
 
-  context"nsfw noun" do
+  context "nsfw noun" do
     let(:subject) do
       Actions::Noun.create("boob")
     end
