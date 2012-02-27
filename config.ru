@@ -2,6 +2,10 @@
 require './fyn'
 require 'sinatra-cache-assets'
 require 'rack/cache'
+require 'newrelic_rpm'
+
+NewRelic::Agent.after_fork(:force_reconnect => true) if defined? Unicorn
+
 if ENV['MEMCACHE_SERVERS']
   use Rack::Cache,
       verbose:     true,
