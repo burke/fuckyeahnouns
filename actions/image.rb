@@ -39,7 +39,9 @@ module Actions
       count  = 0
 
       begin
-        return images.next
+        Timeout::timeout(3) {
+          return images.next
+        }
       rescue Exception => e
         count += 1
         retry if count < 5
