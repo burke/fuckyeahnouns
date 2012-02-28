@@ -16,9 +16,8 @@ module Spice
     end
 
     result = case a
-    when 1  then random(seed)
-    when 2  then prefix(noun,seed)
-    when 3..7 then noun
+    when 1  then prefix(noun,seed)
+    when 2..7 then noun
     else
       suffix(noun,seed)
     end
