@@ -23,14 +23,30 @@ module Actions
       @file = Image.annotate(@file,@noun)
     end
 
+    def self.try_5_times
+      count = 0
+      begin
+        yield
+      rescue Exception => e
+        count += 1
+        count < 5 ? retry : raise(e)
+      end
+    end
+
     def self.create(noun=nil)
       instance = new(noun)
 
       noun or return instance.extend(Didntfindshit)
+      count  = 0
 
-      instance.fetch!    rescue instance.extend(Didntfindshit)
-      instance.annotate! rescue raise(AnnotationException)
-
+      begin
+        try_5_times do
+          instance.fetch!
+          instance.annotate! rescue raise(Actions::Image::AnnotationException)
+        end
+      rescue
+        instance.extend(Didntfindshit)
+      end
       instance
     end
 
@@ -38,13 +54,10 @@ module Actions
       images = source.fetch(noun)
       count  = 0
 
-      begin
+      try_5_times do
         Timeout::timeout(3) {
           return images.next
         }
-      rescue Exception => e
-        count += 1
-        retry if count < 5
       end
     end
 
