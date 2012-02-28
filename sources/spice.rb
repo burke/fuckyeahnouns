@@ -3,14 +3,14 @@ module Spice
   extend self
 
   def up(noun)
-    seed = case rand(0..10)
+    seed = case rand(11)
     when 0..4  then RANDOM
     when 5..6  then MEMES
     else
       CELEBS
     end
 
-    case rand(0..10)
+    case rand(11)
     when 1  then random(seed)
     when 2  then prefix(noun,seed)
     when 3..7 then noun
