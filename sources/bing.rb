@@ -1,6 +1,7 @@
 require 'json'
 require 'open-uri'
 require './sources/image_iterator'
+require './sources/spice'
 
 class Bing
   attr_reader :noun, :images, :result, :json
@@ -45,7 +46,7 @@ class Bing
   end
 
   def self.search_url(noun)
-    query = CGI.escape noun
+    query = CGI.escape(Spice.up(noun))
     ENV['bing'] = '0DA7AB4A8F9C686A25B23945975F9CCF4E8D3592'
     "http://api.bing.net/json.aspx?AppId=#{ENV['bing']}&Query=#{query}&Sources=Image&Version=2.0&Market=en-us&Adult=Moderate&Image.Count=10&Image.Offset=0"
   end
