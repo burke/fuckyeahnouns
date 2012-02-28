@@ -31,10 +31,6 @@ class Bing
     nil
   end
 
-  def best_image
-    Kernel.open(images.first)
-  end
-
   def self.process_json(json)
     result = json["SearchResponse"]
     images = result["Image"]

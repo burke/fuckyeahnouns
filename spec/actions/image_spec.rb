@@ -11,10 +11,18 @@ describe Actions::Image do
       File.new('spec/support/test_image.jpg')
     end
 
+    def test_iterator
+      result = [test_image]
+      def result.next
+        self.first
+      end
+      result
+    end
+
     context 'everything works' do
       before(:each) do
         Actions::Image.stub(:annotate) { test_image }
-        Actions::Image.stub(:fetch)    { test_image }
+        Actions::Image.stub(:fetch)    { test_iterator }
       end
 
       let(:subject) { image("sleepy") }
@@ -35,7 +43,7 @@ describe Actions::Image do
 
     context 'annotation success' do
       before(:each) do
-        Actions::Image.stub(:fetch)    { test_image }
+        Actions::Image.stub(:fetch)    { test_iterator }
       end
 
       it 'succeeds ' do

@@ -7,23 +7,24 @@ module Actions
   class Image
     AnnotationException = Class.new(Exception)
 
-    attr_accessor :file, :max_age
+    attr_accessor :file, :max_age, :noun
 
     def initialize(noun)
       @noun    = noun
       @max_age = 36000
-      @file    = nil
+      @images  = nil
     end
 
     def fetch!
-      @file = Image.fetch(@noun)
+      @images ||= Image.fetch(noun)
+      @file = @images.next
     end
 
     def annotate!
-      @file = Image.annotate(@file,@noun)
+      @file = Image.annotate(@file,noun)
     end
 
-    def self.try_5_times
+    def self.try_5_times!
       count = 0
       begin
         yield
@@ -37,9 +38,8 @@ module Actions
       instance = new(noun)
 
       noun or return instance.extend(Didntfindshit)
-      count  = 0
 
-      try_5_times do
+      try_5_times! do
         instance.fetch!
         instance.annotate!
       end rescue instance.extend(Didntfindshit)
@@ -48,14 +48,7 @@ module Actions
     end
 
     def self.fetch(noun,source=Bing)
-      images = source.fetch(noun)
-      count  = 0
-
-      try_5_times do
-        Timeout::timeout(3) {
-          return images.next
-        }
-      end
+      source.fetch(noun)
     end
 
     def self.annotate(img, noun, shirtastic=false)
