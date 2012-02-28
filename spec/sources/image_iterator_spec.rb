@@ -10,17 +10,37 @@ class Dummy
 end
 
 describe 'ImageIterator' do
-  context 'basic' do
-    before do
-      Kernel.stub(:open) { |arg| arg }
-    end
+  before do
+    Kernel.stub(:open) { |arg| arg }
+  end
 
-    subject {  Dummy.new([:a,:b,:c]) }
+  let(:a) { stub(content_type: 'image') }
+  let(:b) { stub(content_type: 'image') }
+  let(:c) { stub(content_type: 'image') }
+
+  context 'all valid images' do
+
+    subject {  Dummy.new([a,b,c]) }
 
     it 'iterates as expected' do
-      subject.next.should == :a
-      subject.next.should == :b
-      subject.next.should == :c
+      subject.next.should == a
+      subject.next.should == b
+      subject.next.should == c
+      expect {
+        subject.next
+      }.to raise_error StopIteration
+    end
+  end
+
+  context 'one in-valid image' do
+
+    let(:c) { stub(content_type: 'text') }
+
+    subject {  Dummy.new([a,b,c]) }
+
+    it 'iterates as expected' do
+      subject.next.should == a
+      subject.next.should == b
       expect {
         subject.next
       }.to raise_error StopIteration

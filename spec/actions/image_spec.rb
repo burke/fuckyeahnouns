@@ -10,6 +10,7 @@ describe Actions::Image do
     def test_image
       File.new('spec/support/test_image.jpg')
     end
+
     context 'everything works' do
       before(:each) do
         Actions::Image.stub(:annotate) { test_image }
@@ -30,18 +31,6 @@ describe Actions::Image do
       let(:subject) { image('sleepy') }
       its('file.path') { should match(/didntfindshit/) }
 
-    end
-    context 'annotation failed' do
-      before(:each) do
-        Actions::Image.stub(:annotate) { raise 'explosions' }
-        Actions::Image.stub(:fetch)    { test_image }
-      end
-
-      it 'raises ' do
-        expect {
-          image('sleepy')
-        }.to raise_error Actions::Image::AnnotationException
-      end
     end
 
     context 'annotation success' do
