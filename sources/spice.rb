@@ -3,20 +3,28 @@ module Spice
   extend self
 
   def up(noun)
-    seed = case rand(11)
-    when 0..4  then RANDOM
-    when 5..6  then MEMES
+    #will have alot more fun here..
+
+    a = noun.hash   % 10
+    b = noun.length % 10
+
+    seed = case b
+    when 0..5  then RANDOM
+    #when 5..6  then MEMES
     else
       CELEBS
     end
 
-    case rand(11)
+    result = case a
     when 1  then random(seed)
     when 2  then prefix(noun,seed)
     when 3..7 then noun
     else
       suffix(noun,seed)
     end
+
+    puts result, a, b
+    result
   end
 
   def random(collection)
@@ -28,11 +36,11 @@ module Spice
   end
 
   def prefix(noun,collection)
-    random(collection) << " " << noun
+    random(collection) + " " + noun
   end
 
   def suffix(noun,collection)
-    noun << " " << random(collection)
+    noun + " " + random(collection)
   end
 
   RANDOM = [
