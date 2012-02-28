@@ -39,14 +39,14 @@ module Actions
       noun or return instance.extend(Didntfindshit)
       count  = 0
 
-      begin
+      #begin
         try_5_times do
           instance.fetch!
           instance.annotate! rescue raise(Actions::Image::AnnotationException)
         end
-      rescue
-        instance.extend(Didntfindshit)
-      end
+      #rescue
+      #  instance.extend(Didntfindshit)
+      #end
       instance
     end
 
