@@ -9,8 +9,8 @@ module Spice
     b = noun.length % 10
 
     seed = case b
-    when 0..5  then RANDOM
-    #when 5..6  then MEMES
+    when 0..4  then RANDOM
+    when 5..7  then []
     else
       CELEBS
     end
@@ -22,7 +22,6 @@ module Spice
       suffix(noun,seed)
     end
 
-    puts result, a, b
     result
   end
 
