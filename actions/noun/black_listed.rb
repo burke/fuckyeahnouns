@@ -7,6 +7,7 @@ module Actions
       end
 
       def self.blacklisted?(noun)
+        noun = noun.dup
         noun.downcase!
         noun.gsub!(/[^\w]*/,'')
         BLACKLIST.include?(noun)

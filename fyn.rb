@@ -23,7 +23,7 @@ module FuckYeahNouns
     end
 
     def noun
-      @noun ||= Actions::Noun.create(params[:noun])
+      @noun ||= Actions::Noun.create(params[:noun].freeze)
     end
 
     get '/shirt/:noun' do

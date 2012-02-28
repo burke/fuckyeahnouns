@@ -73,7 +73,7 @@
   </head>
   <body>
     <div id="image-container">
-      <img src='/images/<%= CGI.escape params[:noun] %>' />
+      <img src='/images/<%= ERB::Util::h(params[:noun]) %>' />
     </div>
     <br/>
    <form>

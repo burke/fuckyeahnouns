@@ -18,7 +18,6 @@ module Actions
     end
 
     def self.create(noun)
-
       instance = new(noun)
 
       instance.extend(BlackListed) if BlackListed.blacklisted?(noun)
