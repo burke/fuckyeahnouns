@@ -42,7 +42,7 @@ module Actions
       try_5_times! do
         instance.fetch!
         instance.annotate!
-      end# rescue instance.extend(Didntfindshit)
+      end rescue instance.extend(Didntfindshit)
 
       instance
     end

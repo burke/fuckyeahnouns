@@ -26,7 +26,7 @@ module Spice
   end
 
   def random(collection)
-    collection.shuffle.first
+    collection.shuffle.first || ''
   end
 
   def replace(noun,collection)

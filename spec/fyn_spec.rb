@@ -16,6 +16,14 @@ describe FuckYeahNouns::Application do
     File.new('spec/support/test_image.jpg')
   end
 
+  def test_iterator
+    result = [test_image]
+    def result.next
+      self.first
+    end
+    result
+  end
+
   describe 'front page' do
     before(:each) do
       get '/'
@@ -37,7 +45,7 @@ describe FuckYeahNouns::Application do
   describe 'get noun image' do
     before(:each) do
       Actions::Image.stub(:annotate) { test_image }
-      Actions::Image.stub(:fetch)    { test_image }
+      Actions::Image.stub(:fetch)    { test_iterator }
       get '/images/sleepy'
     end
 
