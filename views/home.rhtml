@@ -47,13 +47,21 @@ a {
   margin-bottom: 0.5em;
 }
 
+.random:visited {
+  color: #999;
+  text-decoration: none;
+}
+
 .random:hover {
   color: black;
 }
+
   </style>
 </head>
 <body>
-  <a class="random" href='/random'>⟳ Random</a>
+  <a class="random" href='/random'>
+    <span style="font-size:140%">⟳</span>Random
+  </a>
   <form>
     <label for="search">FUCK YEAH</label> <input id="search" placeholder="<NOUN> + ENTER" />
   </form>

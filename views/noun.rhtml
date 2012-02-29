@@ -39,9 +39,9 @@ p{
 
 label a {
   color: #333;
+}
 
-
-a{
+a {
   text-decoration: none;
   color: #999;
 }
@@ -63,13 +63,20 @@ img{
   margin-bottom: 0.5em;
 }
 
-.random:hover{
+.random:hover {
   color: black;
+}
+
+.random:visited {
+  color: #999;
+  text-decoration: none;
 }
   </style>
   </head>
   <body>
-    <a class="random" href='/random'>⟳ Random</a>
+    <a class="random" href='/random'>
+      <span style="font-size:140%">⟳</span>Random
+    </a>
     <div id="image-container">
       <img src='/images/<%= ERB::Util::h(params[:noun]) %>' />
     </div>
