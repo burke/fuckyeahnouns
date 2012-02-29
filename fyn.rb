@@ -22,12 +22,16 @@ module FuckYeahNouns
       erb :home
     end
 
-    def noun
-      @noun ||= Actions::Noun.create(params[:noun].freeze)
+    def noun(noun = params[:noun])
+      @noun ||= Actions::Noun.create(noun.freeze)
     end
 
     get '/shirt/:noun' do
       redirect noun.shirt.url
+    end
+
+    get '/random' do
+      redirect '/' + Actions::Noun.random
     end
 
     get '/images/:noun' do

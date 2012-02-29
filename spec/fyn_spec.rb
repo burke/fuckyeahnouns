@@ -62,6 +62,18 @@ describe FuckYeahNouns::Application do
     end
   end
 
+  describe 'get random' do
+    before(:each) do
+      Actions::Image.stub(:annotate) { test_image }
+      Actions::Image.stub(:fetch)    { test_image }
+      get '/random'
+    end
+
+    it 'loads' do
+      last_response.status.should == 302
+    end
+  end
+
   describe 'get noun' do
     before(:each) do
       Actions::Image.stub(:annotate) { test_image }
@@ -89,4 +101,5 @@ describe FuckYeahNouns::Application do
       should_be_cached
     end
   end
+
 end

@@ -17,6 +17,10 @@ module Actions
       @image ||= Image.create(noun)
     end
 
+    def self.random
+      Spice::MEMES.shuffle.first
+    end
+
     def self.create(noun)
       instance = new(noun)
 
