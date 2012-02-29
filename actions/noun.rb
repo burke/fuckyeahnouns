@@ -18,7 +18,7 @@ module Actions
     end
 
     def self.random
-      Spice::MEMES.shuffle.first
+      Spice.all.shuffle.first
     end
 
     def self.create(noun)

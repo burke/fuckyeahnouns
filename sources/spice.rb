@@ -2,6 +2,10 @@ module Spice
 
   extend self
 
+  def all
+    RANDOM + MEMES + CELEBS
+  end
+
   def up(noun)
     #will have alot more fun here..
 
