@@ -31,6 +31,7 @@ module FuckYeahNouns
     end
 
     get '/random' do
+      cache_control :private
       redirect '/' + Actions::Noun.random
     end
 
