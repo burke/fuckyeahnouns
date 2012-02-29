@@ -1,84 +1,71 @@
 <html>
   <head>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
- <script>
-   $(function() {
-
-      $("form").submit(function() {
-        window.location = '/' + $("#search").val();
-        return false;
-      });
-     $("button").click(function() {
-      window.location = $(this).attr('data-href'); $(this).attr('disabled', true);
-     });
-    });
-  </script>
     <title>FUCK YEAH <%= params[:noun].upcase.gsub(/[^\w\d\!\@\#\$\%\^\&\*\_\-\ ]/,'') %></title>
-      <style>
-        body {
-          margin: 0 auto;
-          text-align: center;
-          font-size: 36px;
-          font-family: helvetica;
-          color: #333;
-        }
+    <style>
+body {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 36px;
+  font-family: helvetica;
+  color: #333;
+}
 
-        label {
-          line-height: 44px;
-         letter-spacing: -3px;
-          font-weight: bold;
-        }
+label {
+  line-height: 44px;
+ letter-spacing: -3px;
+  font-weight: bold;
+}
 
-        input {
-         margin: 0 auto;
-          height: 44px;
-          font-size: 36px;
-          line-height: 40px;
-          color: #333;
-          font-weight: bold;
-          letter-spacing: -3px;
-          text-transform: uppercase;
-        }
+input {
+ margin: 0 auto;
+  height: 44px;
+  font-size: 36px;
+  line-height: 40px;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: -3px;
+  text-transform: uppercase;
+}
 
-        form{
-          margin: 0 auto;
-        }
+form{
+  margin: 0 auto;
+}
 
-        p{
-          margin-top: 10px;
-          font-size: 8px;
-          color: #999;
-        }
+p{
+  margin-top: 10px;
+  font-size: 8px;
+  color: #999;
+}
 
-        label a {
-          color: #333;
-       }
+label a {
+  color: #333;
 
-        a{
-          text-decoration: none;
-          color: #999;
-        }
 
-        img{
-          padding-bottom: 10px;
-        }
+a{
+  text-decoration: none;
+  color: #999;
+}
 
-        #image-container{
-          width: 600px;
-          margin: 0 auto;
-          min-height: 400px;
-          background: url(ajax-loader.gif) center center no-repeat;
-        }
+img{
+  padding-bottom: 10px;
+}
 
-        .random{
-          font-size: 32px;
-          line-height: 75px;
-          margin-bottom: 0.5em;
-        }
+#image-container{
+  width: 600px;
+  margin: 0 auto;
+  min-height: 400px;
+  background: url(ajax-loader.gif) center center no-repeat;
+}
 
-        .random:hover{
-          color: black;
-        }
+.random{
+  font-size: 32px;
+  line-height: 75px;
+  margin-bottom: 0.5em;
+}
+
+.random:hover{
+  color: black;
+}
   </style>
   </head>
   <body>
@@ -90,9 +77,6 @@
    <form>
      <label><a href="http://fuckyeahnouns.com">FUCK YEAH</a></label> <input id="search" placeholder="<NOUN> + ENTER" />
    </form>
-    <!--
-    <a href="http://www.snapchop.me"><img src="/snap_chop.png?1308766020" title="Snap Chop" /></a>
-    -->
     <br/>
     <span style="position:relative;top:-18px;">
       <a href="http://twitter.com/share" class="twitter-share-button"
@@ -109,6 +93,15 @@
      <br/>
       Images provided by Bing!
     </p>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    <script>
+      $(function() {
+         $("form").submit(function() {
+           window.location = '/' + $("#search").val();
+           return false;
+         });
+       });
+    </script>
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-5149541-9']);
