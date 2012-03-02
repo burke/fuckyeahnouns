@@ -35,7 +35,7 @@ module FuckYeahNouns
       redirect '/' + Actions::Noun.random
     end
 
-    get '/images/:noun' do
+    get '/images/:noun.:format?' do
       send_file noun.image.file, type: :jpg, disposition: :inline
     end
 
