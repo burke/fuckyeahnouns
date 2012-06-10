@@ -44,7 +44,12 @@ class Bing
   def self.search_url(noun)
     query = CGI.escape(Spice.up(noun))
     ENV['bing'] = '0DA7AB4A8F9C686A25B23945975F9CCF4E8D3592'
-    "http://api.bing.net/json.aspx?AppId=#{ENV['bing']}&Query=#{query}&Sources=Image&Version=2.0&Market=en-us&Adult=Off&Image.Count=10&Image.Offset=0&Image.Filters=Face:Portrait"
+    filter = if (rand(10)+1)%2 == 0
+      "&Image.Filters=Face:Portrait"
+    else
+      ""
+    end
+    "http://api.bing.net/json.aspx?AppId=#{ENV['bing']}&Query=#{query}&Sources=Image&Version=2.0&Market=en-us&Adult=Off&Image.Count=10&Image.Offset=0#{filter}"
   end
 
   def self.open_json(url)
