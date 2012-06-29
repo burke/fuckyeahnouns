@@ -7,6 +7,7 @@ module Spice
   end
 
   def up(noun)
+    return noun
     #will have alot more fun here..
 
     a = noun.hash   % 10
