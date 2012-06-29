@@ -49,7 +49,7 @@ class Bing
     else
       ""
     end
-    "http://api.bing.net/json.aspx?AppId=#{ENV['bing']}&Query=#{query}&Sources=Image&Version=2.0&Market=en-us&Adult=Off&Image.Count=10&Image.Offset=0#{filter}"
+    "http://api.bing.net/json.aspx?AppId=#{ENV['bing']}&Query=#{query}&Sources=Image&Version=2.0&Market=en-us&Adult=On&Image.Count=10&Image.Offset=0#{filter}"
   end
 
   def self.open_json(url)
